@@ -25,6 +25,26 @@ The NLP pipeline handles:
 - **Trailing-letter preservation** — product names like "belt d" are split so the
   Urdu root is translated while the trailing technical identifier is kept intact.
 
+### Visual Crop Icons
+
+Text fields are replaced with icon-based navigation so workers can find products by
+crop type without reading. This was the first design decision after Ali Uncle (the
+warehouse manager) set down the text-based tablet without using it.
+
+### Image-Based Product Detection (under devlopment)
+
+A trainable computer vision module lets users photograph a product and match it to
+inventory. The backend extracts image features, compares them against trained models
+per product, and returns ranked matches with confidence scores. Training images are
+uploaded per product and aggregated into a per-product model.
+
+### Full Accounting Layer
+
+Double-entry bookkeeping with journal entries, chart of accounts, accounts payable,
+budget tracking, and balance sheet export. The accounting module is password-protected
+and separate from the warehouse UI.
+
+also, simple analytics tab for overview of revenue, profit and credit analysis
 
 ### Google Drive Sync + Encrypted Backups
 
