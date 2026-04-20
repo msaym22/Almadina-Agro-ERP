@@ -1,36 +1,52 @@
-# 📦 Agro-Inventory-Auditor
+# Almadina Agro ERP — Voice-to-SQL Inventory System
 
-![Stack](https://img.shields.io/badge/Stack-MERN-blue.svg) ![Feature](https://img.shields.io/badge/Data-Excel_Migration-green.svg) ![Status](https://img.shields.io/badge/Status-Production_Ready-brightgreen.svg)
+A production MERN stack ERP built for a family agricultural warehouse in Vehari, Punjab.
+Currently processing **70,000 PKR in daily transactions**.
 
-## 🎯 Business Overview
-A full-stack **Supply Chain Asset Management Platform** designed to digitize offline ledgers and streamline inventory verification.
-Unlike standard inventory apps, this system features a **Bulk Migration Engine** that allows businesses to onboard thousands of SKUs instantly from legacy Excel files.
+The system was designed around a specific constraint: the warehouse staff are low-literacy
+Punjabi speakers who could not use text-based interfaces. The solution was a
+**Voice-to-SQL engine** that accepts spoken Urdu commands and queries a SQLite inventory
+database directly — no typing required.
 
-## 🚀 Key Engineering Features
+## The NLP Problem
 
-### 1. 📊 Legacy Data Migration (Excel Ingestion)
-* **Problem:** Most supply chains still rely on offline Excel spreadsheets, making data siloed and hard to track.
-* **Solution:** Engineered a stream-based parsing pipeline that accepts raw `.xlsx` or `.csv` files.
-* **Impact:** Validates schema, sanitizes inputs, and commits thousands of records to the cloud database in a single batch operation, reducing onboarding time by 90%.
+Standard Urdu speech recognition fails in rural Punjab because dialect varies significantly
+by speaker and region. A word like "feeder" sounds different depending on who says it.
 
-### 2. 🛡️ Real-Time Asset Verification
-* **Live Tracking:** Dashboard updates instantly via REST API polling as assets move through the supply chain.
-* **Audit Trails:** Maintains digital logs of all manual adjustments and bulk imports for financial accountability.
+To handle this, I built a **phonetic array** that maps the dialect variations of the actual
+users — not standardised Urdu — to their inventory queries. The system resolves phonetic
+ambiguity before passing commands to the SQL layer.
 
-### 3. ⚡ High-Performance Search
-* **Indexing:** Implemented MongoDB indexing strategies to allow sub-second retrieval of specific SKUs even within large datasets.
+Additionally, the UI uses **visual crop icons** instead of text fields, so workers can
+navigate inventory by crop type without reading.
 
-## 🛠️ Technical Architecture
+## Stack
 
-| Component | Tech Stack | Responsibility |
-| :--- | :--- | :--- |
-| **Frontend** | React.js / CSS3 | Responsive dashboard for data visualization and file upload interface. |
-| **Backend** | Node.js / Express | REST API handling business logic and file parsing streams. |
-| **Database** | MongoDB | NoSQL document storage for flexible asset attributes. |
-| **ETL Tool** | `xlsx` / Multer | Middleware for parsing and buffer management during file uploads. |
+| Layer    | Tech                                        |
+|----------|---------------------------------------------|
+| Frontend | React.js                                    |
+| Backend  | Node.js / Express                           |
+| Database | SQLite                                      |
+| NLP      | Custom phonetic array (Urdu dialect mapping)|
+| Voice    | Web Speech API → SQL parser                 |
 
-## 📸 Usage Workflow
-1.  **Upload:** Admin uploads a standard Inventory Sheet (`.xlsx`).
-2.  **Parse:** Server validates data types (Integers vs Strings) and checks for duplicates.
-3.  **Commit:** Clean data is bulk-inserted into the `Inventory` collection.
-4.  **Visualize:** Dashboard immediately reflects new stock levels.
+## Running Locally
+
+Prerequisites: Node.js installed.
+
+```bash
+git clone https://github.com/msaym22/Almadina-Agro-ERP.git
+cd Almadina-Agro-ERP
+npm install
+cd frontend && npm install && cd ..
+```
+
+Then double-click `AlmadinaAgro.bat` — it starts the backend, waits for
+initialization, launches the frontend, and opens `localhost:3000` automatically.
+
+> `RunHidden.vbs` runs the same launcher silently (no terminal window),
+> used for deployment on the warehouse tablet.
+
+## Demo
+
+[Watch on YouTube](https://youtu.be/lzolfIsOi2g)
