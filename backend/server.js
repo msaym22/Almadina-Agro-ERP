@@ -11,10 +11,10 @@ try {
 try {
   require('dotenv').config({ path: path.resolve(__dirname, '.env') });
 } catch (e) {
-  console.warn('dotenv not installed; skipping .env loading');
+  console.warn('env not installed; skipping .env loading');
 }
 
-console.log('DEBUG: ENCRYPTION_KEY loaded from .env:', process.env.ENCRYPTION_KEY);
+
 
 const express = require('express');
 const cors = require('cors');
